@@ -7,8 +7,7 @@
     "test": "mocha"
   },
     "dependencies": {
-        "tedious":"latest",
-        "object-mapper":"file:/Users/richardbrash/Documents/Develop/rbmnodemodules/object-mapper"
+        "tedious":"latest"
     },
     "devDependencies": {
         "should":"latest"

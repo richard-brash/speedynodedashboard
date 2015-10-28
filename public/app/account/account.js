@@ -4,8 +4,10 @@
 
         id: ko.observable(),
         appname: ko.observable("es137"),
-        username: ko.observable("developer"),
-        password: ko.observable("password"),
+        //username: ko.observable("developer"),
+        //password: ko.observable("password"),
+        username: ko.observable(),
+        password: ko.observable(),
         firstName: ko.observable(),
         lastName: ko.observable(),
         email: ko.observable(),

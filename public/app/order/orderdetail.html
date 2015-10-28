@@ -1,0 +1,44 @@
+﻿<section data-bind="with: order">
+    <div>
+        <div class="btn-group">
+            <a class="btn btn-large btn-success" href="#" data-bind="click: function(){ router.navigateBack() }"><i class="icon-arrow-left icon-white"></i> Back</a>
+        </div>
+
+    </div>
+    <br/>
+    <br/>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div>
+                <label>Order Id:&nbsp;</label><span data-bind="text: HeaderOrder_ID"></span><br/>
+                <label>Company Name:&nbsp;</label><span data-bind="text: HeaderCompanyName"></span><br/>
+                <label>Customer Id:&nbsp;</label><span data-bind="text: HeaderCustomer_ID"></span><br/>
+                <label>CRM Company Id:&nbsp;</label><span data-bind="text: CRMCompanyID"></span><br/>
+                <label>CRM Contact Id:&nbsp;</label><span data-bind="text: CRMContactID"></span><br/>
+                <label>Order Date:&nbsp;</label><span data-bind="text: moment(HeaderOrderDate()).format('L') "></span><br/>
+                <label>Contact:&nbsp;</label><span data-bind="text: HeaderContact"></span><br/>
+                <label>Order Total:&nbsp;</label><span data-bind="money: HeaderOrderTotal"></span>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div>
+                <label>Quote Number:&nbsp;</label><span data-bind="text: HeaderQuoteNumber"></span><br/>
+                <label>Customer PO:&nbsp;</label><span data-bind="text: HeaderCustomerPO"></span><br/>
+                <label>Payment Method:&nbsp;</label><span data-bind="text: HeaderPaymentMethod"></span><br/>
+                <label>Quote Salesman Id:&nbsp;</label><span data-bind="text: QuoteSalesmanID"></span><br/>
+                <label>Order Salesman Id:&nbsp;</label><span data-bind="text: OrderSalesmanID"></span><br/>
+                <label>Process Salesman Id:&nbsp;</label><span data-bind="text: ProcessSalesmanID"></span><br/>
+                <label>Ship Via:&nbsp;</label><span data-bind="text: ShipVia"></span>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div data-bind="compose:{ model:'order/orderitemlist', view: 'order/orderitemlist.html', activationData: HeaderOrder_ID()}"></div>
+
+
+</section>
+
+

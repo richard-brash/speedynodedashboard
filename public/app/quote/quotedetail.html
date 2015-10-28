@@ -1,0 +1,40 @@
+﻿<section data-bind="with: quote">
+    <div>
+        <div class="btn-group">
+            <a class="btn btn-large btn-success" href="#" data-bind="click: function(){ router.navigateBack() }"><i class="icon-arrow-left icon-white"></i> Back</a>
+        </div>
+
+    </div>
+    <br/>
+    <br/>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div>
+                <label>Quote Id:&nbsp;</label><span data-bind="text: HeaderQuote_ID"></span><br/>
+                <label>Company Name:&nbsp;</label><span data-bind="text: HeaderCompanyName"></span><br/>
+                <label>Customer Id:&nbsp;</label><span data-bind="text: HeaderCustomer_ID"></span><br/>
+                <label>CRM Company Id:&nbsp;</label><span data-bind="text: CRMCompanyID"></span><br/>
+                <label>CRM Contact Id:&nbsp;</label><span data-bind="text: CRMContactID"></span><br/>
+                <label>Quote Date:&nbsp;</label><span data-bind="text: moment(HeaderOrderDate()).format('L') "></span><br/>
+                <label>Contact:&nbsp;</label><span data-bind="text: HeaderContact"></span><br/>
+                <label>Quote Total:&nbsp;</label><span data-bind="money: QuoteTotal"></span>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div>
+                <label>Payment Method:&nbsp;</label><span data-bind="text: HeaderPaymentMethod"></span><br/>
+                <label>Quote Salesman Id:&nbsp;</label><span data-bind="text: SalesmanID"></span><br/>
+                <label>Ship Via:&nbsp;</label><span data-bind="text: ShipVia"></span>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div data-bind="compose:{ model:'quote/quoteitemlist', view: 'quote/quoteitemlist.html', activationData: HeaderQuote_ID()}"></div>
+
+
+</section>
+
+

@@ -1,0 +1,73 @@
+﻿<section class="panel-body" data-bind="with:companyDetail">
+    <div>
+        <div class="btn-group">
+            <a class="btn btn-large btn-success" href="#" data-bind="click: function(){ router.navigateBack() }"><i class="icon-arrow-left icon-white"></i> Back</a>
+        </div>
+        <a class="btn btn-large btn-success" style="float: right !important; margin-right: 10%;" href="#" data-bind="click: function(){ router.navigate('#reportdetail/' + SpeedyId()) }">Reports <i class="icon-arrow-right icon-white"></i></a>
+    </div>
+<br/>
+    <div class="row">
+        <div>
+            <div class="col-lg-6 col-lg-offset-2">
+                <div>
+                    <label>Speedy ID</label>:&nbsp;
+                    <span data-bind="text:SpeedyId"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label>Infusionsoft ID</label>:&nbsp;
+                    <span data-bind="text:Id"></span>
+
+                </div>
+
+                <div>
+                    <label>Company</label>:&nbsp;
+                    <span data-bind="text:Company"></span>
+                </div>
+                <div>
+                    <label>Email</label>:&nbsp;
+                    <span data-bind="text:Email"></span>
+                </div>
+                <div>
+                    <label>Website</label>:&nbsp;
+                    <span data-bind="text:Website"></span>
+                </div>
+                <div>
+                    <label>Phone</label>:&nbsp;
+                    <span data-bind="text:Phone1"></span>
+                    <label>Ext:</label>:&nbsp;
+                    <span data-bind="text:Phone1Ext"></span>
+                </div>
+                <div>
+                    <label>Zone</label>:&nbsp;
+                    <span data-bind="text:Zone"></span>
+                </div>
+                <div>
+                    <label>Street Address</label>:&nbsp;
+                    <span data-bind="text:StreetAddress1"></span>
+                    <div data-bind="text:StreetAddress2"></div>
+                </div>
+                <div>
+                    <label>City</label>:&nbsp;
+                    <span data-bind="text:City"></span>
+                </div>
+                <div>
+                    <label>State</label>:&nbsp;
+                    <span data-bind="text:State"></span>
+                </div>
+                <div>
+                    <label>Postal Code</label>:&nbsp;
+                    <span data-bind="text:PostalCode"></span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div data-bind="compose:{ model:'order/orderlist', view: 'order/orderlist.html', activationData: [SpeedyId()]}"></div>
+        </div>
+        <div class="col-lg-6">
+            <div data-bind="compose:{ model:'quote/quotelist', view: 'quote/quotelist.html', activationData: [SpeedyId(), true]}"></div>
+        </div>
+
+    </div>
+
+</section>

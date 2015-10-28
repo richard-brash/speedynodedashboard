@@ -1,0 +1,44 @@
+﻿<section>
+    <div style="margin-top: 25px;" class="row">
+        <h4 class="pull-left margin0top span4">Quote Items:</h4>
+
+    </div><br />
+    <div class="table-responsive">
+        <div class="alert alert-info" data-bind="visible: $data.quoteItems().length <= 0" style="display:none;">No Quote Items Found</div>
+        <div>
+            <table class="table table-striped table-hover table-bordered table-highlight" data-bind="visible: $data.quoteItems().length > 0" style="display:none;">
+                <thead>
+                    <tr>
+                        <th>Item Code</th>
+                        <th>Item Description</th>
+                        <th>Inventory Category</th>
+                        <th>Inventory Description</th>
+                        <th>Pcs</th>
+                        <th>Length</th>
+                        <th>Qty</th>
+                        <th>Cost</th>
+                        <th>Margin</th>
+                        <th>Extended</th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: $data.quoteItems">
+                    <tr>
+
+                        <td data-bind="text: $data.DetailItemCode"></td>
+                        <td data-bind="text: $data.DetailItemDescription"></td>
+                        <td data-bind="text: $data.DetailInventoryCategory"></td>
+                        <td data-bind="text: $data.DetailInventoryDescription"></td>
+                        <td data-bind="text: $data.DetailPcs"></td>
+                        <td data-bind="text: $data.DetailLength"></td>
+                        <td data-bind="text: $data.DetailQtyOrder"></td>
+                        <td data-bind="money: $data.DetailItemCost"></td>
+                        <td data-bind="money: $data.DetailMargin"></td>
+                        <td data-bind="money: $data.DetailExtendedPrice"></td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+

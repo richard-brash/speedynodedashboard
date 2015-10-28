@@ -1,0 +1,31 @@
+﻿<section>
+    <div style="display:none;" data-bind="visible: $data.companyId() > 0">
+        <div class="row">
+            <h4 class="pull-left margin0top span4">
+                Quotes:
+            </h4>
+
+        </div><br />
+        <div class="table-responsive">
+            <div class="alert alert-info" data-bind="visible: $data.quotes().length <= 0" style="display:none;">Nothing Found</div>
+            <div>
+                <table class="table table-striped table-hover table-bordered table-highlight" data-bind="visible: $data.quotes().length > 0" style="display:none;">
+                    <thead>
+                        <tr>
+                            <th>Quote Id</th>
+                            <th>Date Created</th>
+                            <th>Quote Total</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: $data.quotes">
+                        <tr class="clickable" data-bind="click: function () { router.navigate('#quotedetail/'+ $data.HeaderQuote_ID()) }">
+                            <td data-bind="text: $data.HeaderQuote_ID"></td>
+                            <td data-bind="text: moment($data.HeaderOrderDate()).format('L')"></td>
+                            <td data-bind="money: $data.QuoteTotal"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

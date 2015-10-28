@@ -1,0 +1,14 @@
+{
+    "name": "object-mapper",
+    "version": "0.0.1",
+    "description": "A tool to map a source object to a target object",
+    "main": "index.js",
+    "dependencies":{
+
+    },
+    "scripts": {
+        "test": "mocha"
+    },
+    "author": "Richard Brash",
+    "license": "BSD-2-Clause"
+}

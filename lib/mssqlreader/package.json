@@ -1,0 +1,22 @@
+{
+  "name": "mssqlreader",
+  "version": "0.0.0",
+  "description": "A module for querying MSSQL data",
+  "main": "MSSQLReader.js",
+  "scripts": {
+    "test": "mocha"
+  },
+    "dependencies": {
+        "tedious":"latest",
+        "object-mapper":"file:/Users/richardbrash/Documents/Develop/rbmnodemodules/object-mapper"
+    },
+    "devDependencies": {
+        "should":"latest"
+    },
+  "repository": {
+    "type": "git",
+    "url": "https://rbmglobal@bitbucket.org/rbmglobal/mssqlreader.git"
+  },
+  "author": "RBM Global, LLC",
+  "license": "BSD-2-Clause"
+}

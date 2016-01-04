@@ -30,7 +30,7 @@ define(['plugins/router', 'knockout'], function (router, ko) {
 
             var toMoney = function(num){
 
-                if(typeof(num) == "undefined"){
+                if(typeof(num) == "undefined" || num == null){
                     num = 0;
                     return '$' + (num.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') );
                 } else{

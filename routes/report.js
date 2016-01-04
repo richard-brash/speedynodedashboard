@@ -18,6 +18,41 @@ router.param('id', function(req, res, next, id){
 
 });
 
+router.get('/test/:id', function(req,res){
+
+    var config = Config.ISConfig("es137");
+    var msreader = new MSSQLReader(config.mssql.username, config.mssql.password, config.mssql.server);
+
+    var report = [];
+
+    msreader.executeQuery(
+        "SELECT HeaderOrder_ID, HeaderOrderTotal, HeaderOrderDate " +
+        "FROM vw_CRMAllOrders " +
+        "WHERE " +
+        "HeaderCustomer_ID = " + req.id + "AND HeaderOrderDate >= '01/01/2015' AND HeaderOrderDate < '01/01/2016'",
+        function(error, records){
+
+            if(error) {
+                callback(error);
+
+            } else {
+
+                var sum = 0;
+                for(var i=0 ; i<records.length; i++){
+
+                    report[i] = {OrderId:records[i].HeaderOrder_ID,  OrderDate:moment(records[i].HeaderOrderDate).format("MM/DD/YYYY"), OrderTotal:records[i].HeaderOrderTotal};
+                    sum += records[i].HeaderOrderTotal;
+                }
+
+
+                res.json(report);
+            }
+
+        });
+
+
+
+})
 
 router.get('/:id', auth.isValidate, function(req,res){
 
@@ -32,7 +67,7 @@ router.get('/:id', auth.isValidate, function(req,res){
 
                 //  self.getCurrentYearOrdersTotal();
                 msreader.executeQuery(
-                    "SELECT SUM(HeaderOrderTotal) as OrderTotal " +
+                    "SELECT SUM(DetailExtendedPrice) as OrderTotal " +
                     "FROM vw_CRMAllOrders " +
                     "WHERE " +
                     "HeaderCustomer_ID = " + req.id + "AND HeaderOrderDate >= '" + firstOfYear + "'",
@@ -55,7 +90,7 @@ router.get('/:id', auth.isValidate, function(req,res){
                 report.salesTotalByYears = [];
                 //            self.salesTotalByYears();
                 msreader.executeQuery(
-                    "SELECT SUM(HeaderOrderTotal) as OrderTotal, YEAR(HeaderOrderDate) AS Year " +
+                    "SELECT SUM(DetailExtendedPrice) as OrderTotal, YEAR(HeaderOrderDate) AS Year " +
                     "FROM vw_CRMAllOrders " +
                     "WHERE " +
                     "HeaderCustomer_ID = " + req.id + " GROUP BY YEAR(HeaderOrderDate) ORDER BY YEAR(HeaderOrderDate) DESC",
@@ -87,11 +122,11 @@ router.get('/:id', auth.isValidate, function(req,res){
                     "QPivot.[3] As Q3, QPivot.[4] As Q4 " +
                     "FROM (SELECT YEAR(HeaderOrderDate) [Year], " +
                     "DATEPART(QUARTER, HeaderOrderDate) [Quarter], " +
-                    "SUM(HeaderOrderTotal) [HeaderOrderTotal SUM]" +
+                    "SUM(DetailExtendedPrice) [DetailExtendedPrice SUM]" +
                     "FROM vw_CRMAllOrders WHERE HeaderCustomer_ID = " + req.id + " " +
                     "GROUP BY YEAR(HeaderOrderDate), " +
                     "DATEPART(QUARTER,HeaderOrderDate)) AS QuarterlyData " +
-                    "PIVOT( SUM([HeaderOrderTotal SUM])" +
+                    "PIVOT( SUM([DetailExtendedPrice SUM])" +
                     "FOR QUARTER IN ([1],[2],[3],[4])) AS QPivot  ORDER BY Year DESC",
                     function(error, records){
 
@@ -114,11 +149,11 @@ router.get('/:id', auth.isValidate, function(req,res){
                     "QPivot.[3] As Q3, QPivot.[4] As Q4 " +
                     "FROM (SELECT YEAR(HeaderOrderDate) [Year], " +
                     "DATEPART(QUARTER, HeaderOrderDate) [Quarter], " +
-                    "AVG(HeaderOrderTotal) [HeaderOrderTotal AVG]" +
+                    "AVG(DetailExtendedPrice) [DetailExtendedPrice AVG]" +
                     "FROM vw_CRMAllOrders WHERE HeaderCustomer_ID = " + req.id + " " +
                     "GROUP BY YEAR(HeaderOrderDate), " +
                     "DATEPART(QUARTER,HeaderOrderDate)) AS QuarterlyData " +
-                    "PIVOT( AVG([HeaderOrderTotal AVG])" +
+                    "PIVOT( AVG([DetailExtendedPrice AVG])" +
                     "FOR QUARTER IN ([1],[2],[3],[4])) AS QPivot   ORDER BY Year DESC",
                     function(error, records){
 
@@ -139,7 +174,7 @@ router.get('/:id', auth.isValidate, function(req,res){
                 var threeMonthsAgo = moment().add(-6, 'M');
                 msreader.executeQuery(
                     //DATENAME(month, GETDATE())
-                    "SELECT YEAR(HeaderOrderDate) as SalesYear, MONTH(HeaderOrderDate) as SalesMonth, SUM(HeaderOrderTotal) as TotalSales " +
+                    "SELECT YEAR(HeaderOrderDate) as SalesYear, MONTH(HeaderOrderDate) as SalesMonth, SUM(DetailExtendedPrice) as TotalSales " +
                     "FROM vw_CRMAllOrders WHERE HeaderOrderDate >= '" + threeMonthsAgo.format('L') +"' " + " AND HeaderCustomer_ID = " + req.id + " " +
                     "GROUP BY YEAR(HeaderOrderDate), MONTH(HeaderOrderDate) " +
                     "ORDER BY YEAR(HeaderOrderDate) DESC, MONTH(HeaderOrderDate) DESC ",
@@ -164,11 +199,11 @@ router.get('/:id', auth.isValidate, function(req,res){
                     "QPivot.[3] As Q3, QPivot.[4] As Q4 " +
                     "FROM (SELECT YEAR(HeaderOrderDate) [Year], " +
                     "DATEPART(QUARTER, HeaderOrderDate) [Quarter], " +
-                    "COUNT(1) [HeaderOrderTotal Count] " +
+                    "COUNT(1) [DetailExtendedPrice Count] " +
                     "FROM vw_CRMAllOrders WHERE HeaderCustomer_ID = " + req.id + " " +
                     "GROUP BY YEAR(HeaderOrderDate), " +
                     "DATEPART(QUARTER,HeaderOrderDate)) AS QuarterlyData " +
-                    "PIVOT( SUM([HeaderOrderTotal Count])" +
+                    "PIVOT( SUM([DetailExtendedPrice Count])" +
                     "FOR QUARTER IN ([1],[2],[3],[4])) AS QPivot  ORDER BY Year DESC",
                     function(error, records){
 

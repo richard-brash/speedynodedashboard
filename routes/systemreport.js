@@ -8,6 +8,7 @@ var Config = require('../config');
 
 var rbmJSONResponse = require("../lib/rbmJSONResponse");
 var MSSQLReader = require('../lib/mssqlreader');
+var InfusionsoftApiClient = require('../lib/InfusionsoftApiClient');
 
 router.param('id', function(req, res, next, id){
 
@@ -58,21 +59,20 @@ router.get('/topcustomers', auth.isValidate, function(req, res) {
     var config = Config.ISConfig(req.user.appname);
     var params = require('url').parse(req.url,true).query;
 
-    var mappings = Config.getTableMappingForTable("vw_CRMAllQuotes", config);
-    res.json(rbmJSONResponse.successResponse(mappings));
+    var msreader = new MSSQLReader(config.mssql.username, config.mssql.password, config.mssql.server);
+    var sql =         "SELECT TOP " + params.toplimit + " HeaderCompanyName, HeaderCustomer_ID, SUM(DetailExtendedPrice) as TotalSales " +    
+        "FROM  vw_CRMAllOrders " 
+       +  "GROUP BY HeaderCompanyName, HeaderCustomer_ID ORDER BY TotalSales DESC";
+    msreader.executeQuery(sql,         
+        function(error, records){
 
-    // var msreader = new MSSQLReader(config.mssql.username, config.mssql.password, config.mssql.server);
+            if(error) {                
+                res.json(rbmJSONResponse.errorResponse(error));
+            } else {
+                res.json(rbmJSONResponse.successResponse(records));                
+            }
 
-    // msreader.executeQuery("SELECT HeaderQuote_ID, HeaderCustomer_ID, HeaderOrderDate, SUM(DetailExtendedPrice) AS QuoteTotal FROM vw_CRMAllQuotes WHERE HeaderCustomer_ID = " + params.speedyid + " GROUP BY HeaderQuote_ID, HeaderCustomer_ID, HeaderOrderDate  ORDER BY HeaderQuote_ID  DESC",
-    //     function(error, records){
-
-    //         if(error) {
-    //             res.json(rbmJSONResponse.errorResponse(error));
-    //         } else {
-    //             res.json(rbmJSONResponse.successResponse(records));
-    //         }
-
-    //     });
+        });
 
 });
 

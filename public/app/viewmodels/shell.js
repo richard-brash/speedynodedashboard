@@ -5,6 +5,7 @@
             window.router = router;
             router.map([
                 { route: ['', 'companies'], title: 'Companies', moduleId: 'company/companylist', nav: true, hash: '#companies' },
+                { route: 'reports*details', title: 'Reports', moduleId: 'reports/index', nav: true },
                 { route: 'companydetail(/:id)', title: 'Companies', moduleId: 'company/companydetail', hash: '#companydetail' },
                 { route: 'reportdetail(/:id)', title: 'Reports', moduleId: 'company/reportdetail', hash: '#reportdetail' },
                 { route: 'orderdetail(/:id)', title: 'Order Details', moduleId: 'order/orderdetail', hash: '#orderdetail' },

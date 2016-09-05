@@ -17,8 +17,6 @@
 
         self.activate = function (companyId) {
 
-            console.log("Company ID");
-            console.log(companyId);
             if (companyId != undefined && companyId != null) {
                 self.companyId(companyId);
                 self.getOrders(companyId);

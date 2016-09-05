@@ -1,10 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<section class="panel-body">
+    <div class="row">
+        <div class="col-sm-4">
+            <div>
+                <br/>
+                <div class="list-group" data-bind="foreach:router.navigationModel">
+                        <a class="list-group-item list-group-item-action" data-bind="attr: { href: hash }, html: title"></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div data-bind="router: { cacheViews: false }"></div>
+        </div>
 
-</body>
-</html>
+    </div>
+</section>

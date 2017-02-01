@@ -10,6 +10,7 @@ var order = require('./routes/order');
 var quote = require('./routes/quote');
 var report = require('./routes/report');
 var systemreport = require('./routes/systemreport');
+var salesreport = require('./routes/salesreport');
 
 var app = express();
 
@@ -28,6 +29,7 @@ app.use('/order', order);
 app.use('/quote', quote);
 app.use('/report', report);
 app.use('/systemreport', systemreport);
+app.use('/salesreport', salesreport);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

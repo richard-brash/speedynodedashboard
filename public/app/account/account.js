@@ -138,10 +138,6 @@
                     cookie = c.substring(name.length+1, c.length);
             }
 
-            console.log("cookie");
-
-            console.log(cookie);
-
             if (cookie.length != 0)
             {
                 var cookieData = JSON.parse(cookie);

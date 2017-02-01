@@ -1,0 +1,36 @@
+<section class="panel-body">
+
+    <h3>Top Cities</h3>
+    <hr/>
+    <div>
+        Show Top: <select data-bind="options: toplimits, value:toplimit, event:{ change:getCities()}"></select> Cities.            
+    </div>    
+    <br/>
+    <!--<ul class="pager" data-bind="visible: $data.companies().length > 0"> 
+        <li class="previous"><a href="#" data-bind="click: movePrevious"><i class="icon-arrow-left icon-left"></i>Previous Page</a></li>
+        <li class="next"><a href="#" data-bind="click: moveNext">Next Page <i class="icon-arrow-right icon-right"></i></a></li>
+    </ul>-->
+    <div class="table-responsive">
+        <div class="alert alert-info" data-bind="visible: $data.cities().length <= 0" style="display:none;">No records found</div>
+        <table class="table table-striped table-hover table-bordered table-highlight" data-bind="visible: $data.cities().length > 0" style="display:none;">
+            <thead>
+                <tr>
+                    <th>City</th>
+                    <th>Total Sales</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: $data.cities">
+                <tr >
+                    <td data-bind="text: $data.City"></td>
+                    <td data-bind="money: $data.TotalSales"></td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+</section>
+
+

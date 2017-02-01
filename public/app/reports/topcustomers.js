@@ -67,7 +67,7 @@ define(['plugins/router', 'account/account', 'company/Company'], function (route
 
 
         self.getCompanies = function () {
-
+            
             var currentPage = self.currentPage();
             var itemsToGet = self.itemsToGet();
             var toplimit = self.toplimit();

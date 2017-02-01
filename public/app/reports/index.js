@@ -9,8 +9,8 @@ define(['plugins/router', 'knockout'], function(router, ko) {
         .map([
             { route: '', moduleId: 'report1', title: 'Report One', nav: false},
             { route: 'topcustomers', moduleId: 'topcustomers', title: 'Top Customers', nav: true, hash:'#reports/topcustomers'},
-            { route: 'report2', moduleId: 'report2', title: 'Report Two', nav: true, hash:'#reports/report2'},
-            { route: 'report3', moduleId: 'report3', title: 'Report Three', nav: true, hash:'#reports/report3'}
+            { route: 'topcities', moduleId: 'topcities', title: 'Top Cities', nav: true, hash:'#reports/topcities'},
+            { route: 'salesreport', moduleId: 'salesreport', title: 'Sales Report', nav: true, hash:'#reports/salesreport'}
         ]).buildNavigationModel();
 
     return {

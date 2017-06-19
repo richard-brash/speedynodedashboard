@@ -49,6 +49,19 @@ section {
   margin: 0 20px;
 }
 
+.clickable{
+  cursor: pointer;
+}
+
+.reduction {
+  color: red;
+}
+
+.increase {
+  color: green;
+}
+
+
 .navbar-nav li.loader {
   margin: 12px 24px 0 6px;
 }

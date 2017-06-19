@@ -54,6 +54,130 @@ router.get('/test/:id', function(req,res){
 
 })
 
+router.get('/sales/:id', auth.isValidate, function(req,res){
+
+    var config = Config.ISConfig(req.user.appname);
+    var msreader = new MSSQLReader(config.mssql.username, config.mssql.password, config.mssql.server);
+
+    var firstOfYear = moment().format("01/01/YYYY");
+    var firstOfLastYear = moment().subtract(1, 'years').format("01/01/YYYY");
+    var todayLastYear = moment().subtract(1, 'years').format("MM/DD/YYYY");
+    var report = {};
+
+    async.parallel([
+            function(callback) {
+
+                //  self.getCurrentYearOrdersTotal();
+                msreader.executeQuery(
+                    "SELECT SUM(DetailExtendedPrice) as OrderTotal " +
+                    "FROM vw_CRMAllOrders " +
+                    "WHERE " +
+                    "HeaderCustomer_ID = " + req.id + "AND HeaderOrderDate >= '" + firstOfYear + "'",
+                    function(error, records){
+
+                        if(error) {
+                            callback(error);
+
+                        } else {
+
+                            report.CurrentYearOrdersTotal = records[0].OrderTotal;
+                            callback();
+
+
+                        }
+
+                    });
+            },
+            function(callback) {
+
+                //  self.getCurrentYearOrdersTotal();
+                msreader.executeQuery(
+                    "SELECT SUM(DetailExtendedPrice) as OrderTotal " +
+                    "FROM vw_CRMAllOrders " +
+                    "WHERE " +
+                    "HeaderCustomer_ID = " + req.id + "AND HeaderOrderDate >= '" + firstOfLastYear + "' AND HeaderOrderDate <= '" + todayLastYear + "'",
+                    function(error, records){
+
+                        if(error) {
+                            callback(error);
+
+                        } else {
+
+                            report.LastYearOrdersTotal = records[0].OrderTotal;
+                            callback();
+
+
+                        }
+
+                    });
+            },
+
+
+            function(callback) {
+                report.salesTotalByYears = [];
+                //            self.salesTotalByYears();
+                msreader.executeQuery(
+                    "SELECT SUM(DetailExtendedPrice) as OrderTotal, YEAR(HeaderOrderDate) AS Year " +
+                    "FROM vw_CRMAllOrders " +
+                    "WHERE " +
+                    "HeaderCustomer_ID = " + req.id + " GROUP BY YEAR(HeaderOrderDate) ORDER BY YEAR(HeaderOrderDate) DESC",
+                    function(error, records){
+
+                        if(error) {
+                            callback(error);
+
+                        } else {
+
+                            for(var i=0 ; i<records.length; i++){
+                                report.salesTotalByYears[i] = {Year:records[i].Year, Total:records[i].OrderTotal};
+                            }
+
+
+                            callback();
+                        }
+
+                    });
+
+
+
+            },
+
+            function(callback) {
+                report.salesByMonth = [];
+
+                var threeMonthsAgo = moment().add(-6, 'M');
+                msreader.executeQuery(
+                    //DATENAME(month, GETDATE())
+                    "SELECT YEAR(HeaderOrderDate) as SalesYear, MONTH(HeaderOrderDate) as SalesMonth, SUM(DetailExtendedPrice) as TotalSales " +
+                    "FROM vw_CRMAllOrders WHERE HeaderOrderDate >= '" + threeMonthsAgo.format('L') +"' " + " AND HeaderCustomer_ID = " + req.id + " " +
+                    "GROUP BY YEAR(HeaderOrderDate), MONTH(HeaderOrderDate) " +
+                    "ORDER BY YEAR(HeaderOrderDate) DESC, MONTH(HeaderOrderDate) DESC ",
+                    function(error, records){
+
+                        if(error) {
+                            callback(error);
+
+                        } else {
+                            report.salesByMonth = records;
+                            callback();
+                        }
+
+                    });
+
+            }
+        ],
+        function(error){
+            if (error){
+                res.json(rbmJSONResponse.errorResponse(error));
+            } else {
+                res.json(rbmJSONResponse.successResponse(report));
+            }
+        }
+    );
+
+
+});
+
 router.get('/:id', auth.isValidate, function(req,res){
 
     var config = Config.ISConfig(req.user.appname);

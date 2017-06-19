@@ -5,6 +5,7 @@ var express = require('express');
 var router = express.Router();
 var auth = require("../lib/authenticate");
 var Config = require('../config');
+var moment = require('moment');
 
 var rbmJSONResponse = require("../lib/rbmJSONResponse");
 var MSSQLReader = require('../lib/mssqlreader');
@@ -59,9 +60,13 @@ router.get('/topcustomers', auth.isValidate, function(req, res) {
     var config = Config.ISConfig(req.user.appname);
     var params = require('url').parse(req.url,true).query;
 
+    var firstOfYear = moment().format("01/01/YYYY");
+    var firstOfLastYear = moment().subtract(1, 'years').format("01/01/YYYY");
+
     var msreader = new MSSQLReader(config.mssql.username, config.mssql.password, config.mssql.server);
-    var sql =         "SELECT TOP " + params.toplimit + " HeaderCompanyName, HeaderCustomer_ID, SUM(DetailExtendedPrice) as TotalSales " +    
-        "FROM  vw_CRMAllOrders " 
+    var sql = "SELECT TOP " + params.toplimit + " HeaderCompanyName, HeaderCustomer_ID, SUM(DetailExtendedPrice) as TotalSales " +    
+        "FROM  vw_CRMAllOrders " +
+        "WHERE HeaderOrderDate >= '" + firstOfLastYear + "' AND HeaderOrderDate > '" + firstOfYear + "'"
        +  "GROUP BY HeaderCompanyName, HeaderCustomer_ID ORDER BY TotalSales DESC";
     msreader.executeQuery(sql,         
         function(error, records){

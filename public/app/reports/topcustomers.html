@@ -16,20 +16,26 @@
             <thead>
                 <tr>
                     <th>Company</th>
-                    <th>City</th>
-                    <th>Phone</th>
-                    <th>Zone</th>
-                    <th>Total Sales</th>
+                    <th>Annual Diff</th>
+                    <th>Quarter Diff</th>
+                    <th>Total Last Year</th>
+                    <th>This YTD</th>
+                    <th>Last YTD</th>
+                    <th>This 3 Month Rolling</th>
+                    <th>Last Year Quarter Average</th>
                 </tr>
             </thead>
             <tbody data-bind="foreach: $data.companies">
-                <tr class="clickable" data-bind="click: function(){ router.navigate('#companydetail/' + $data.InfusionSoft_Id) }">
+                <!--<tr class="clickable" data-bind="click: function(){ router.navigate('#companydetail/' + $data.InfusionSoft_Id) }">-->
+                <tr class="clickable" data-bind="click: $parent.seeCompany.bind($data, $data.Speedy_Id())">
                     <td data-bind="text: $data.Company"></td>
-                    <td data-bind="text: $data.City"></td>
-                    <td data-bind="text: $data.Phone"></td>
-                    <td data-bind="text: $data.Zone"></td>
-                    <td data-bind="money: $data.TotalSales"></td>
-
+                    <td data-bind="percentage: $data.YearDiff"></td>
+                    <td data-bind="percentage: $data.QuarterDiff"></td>
+                    <td data-bind="money: $data.LastYearTotal"></td>
+                    <td data-bind="money: $data.ThisYTD"></td>
+                    <td data-bind="money: $data.LastYTD"></td>
+                    <td data-bind="money: $data.ThisR3M"></td>
+                    <td data-bind="money: $data.LastQAVG"></td>
                 </tr>
             </tbody>
         </table>

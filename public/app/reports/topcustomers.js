@@ -2,8 +2,11 @@
  * Created by richardbrash on 4/5/16.
  */
 
+topCompany = {
 
-define(['plugins/router', 'account/account', 'company/Company'], function (router, account, Company) {    
+}
+
+define(['plugins/router', 'account/account', 'company/Company', 'reports/topCompany'], function (router, account, Company, TopCompany) {    
     var ctor = function () {
         var self = this;
 
@@ -65,6 +68,11 @@ define(['plugins/router', 'account/account', 'company/Company'], function (route
 
         };
 
+        self.seeCompany = function(speedy_id){
+
+            router.navigate('#reportdetail/' + speedy_id);
+
+        }
 
         self.getCompanies = function () {
             
@@ -86,44 +94,96 @@ define(['plugins/router', 'account/account', 'company/Company'], function (route
                     if (response.success) {
                         var itemCount = response.data.length;
                         var mapCount = 0;
-                        var mapped = $.map(response.data, function (item) {
-                            
-                            var data = {
-                                skip: 1,
-                                take: 1,
-                                filters: ko.toJSON([{ field: "_SpeedyId0", value: item.HeaderCustomer_ID}])
-                            }
+                        var mapped = $.map(response.data, function (company) {
 
-                            account.ajax({
-                                url: "company",
-                                method: "GET",
-                                data: data,
-                                success: function (companyData) {
-                                    if (companyData.success) {
-                                        var company = companyData.data[0];
-                                        var map = {
-                                            InfusionSoft_Id : company.Id,
-                                            Speedy_Id       : company._SpeedyId0,                                
-                                            Company         : company.Company,
-                                            City            : company.City,
-                                            Phone           : company.Phone1,
-                                            Zone            : company._Zone,
-                                            TotalSales      : item.TotalSales,
-                                        };
-                                        self.companies.push(map); 
-                                    } else {
-                                        console.log(companyData);
-                                    }
+                        var tc = new TopCompany({
+                            Speedy_Id       : company.HeaderCustomer_ID,
+                            Company         : company.HeaderCompanyName,
+                        });
+                        tc.init();
+                        self.companies.push(tc);
+                                                    
+                        // mapCount++;
+                        // if(mapCount == itemCount){
+                        //     self.companies.sort(function (left, right) { 
+                        //         return left.TotalSales == right.TotalSales ? 0 : (left.TotalSales > right.TotalSales ? -1 : 1) 
+                        //     });                                        
+                        // }
 
-                                    mapCount++;
-                                    if(mapCount == itemCount){
-                                        self.companies.sort(function (left, right) { 
-                                            return left.TotalSales == right.TotalSales ? 0 : (left.TotalSales > right.TotalSales ? -1 : 1) 
-                                        });                                        
-                                    }
-                                    
-                                }
-                            });
+
+//COMPANY {{ % DIFF for 3 month rolling }} {{[2016 TOTAL]}} {{[JAN-MAY 2017] [JAN-MAY 2016]}} 	{{[MAR, APR, MAY 2017]}} 	{{2016/4}}
+                        // var payload = {
+                        //     url: "report/" + company.HeaderCustomer_ID,
+                        //     method: "GET",
+                        //     data: {},
+                        //     success: function (response) {
+
+                        //         if (response.success) {
+                        //             var report = response.data;
+                        //             console.log(report);
+
+                        //             var map = {
+                        //                 Speedy_Id       : company.HeaderCustomer_ID,
+                        //                 Company         : company.HeaderCompanyName,
+                        //                 Diff            : .4,
+                        //                 PreviousYear    : report.salesTotalByYears[1].Total,
+                        //                 ThisYTD             : company.TotalSales,
+                        //             }
+
+                                     
+
+
+                        //             // ORDERS
+                        //             self.currentYearOrdersTotal(report.CurrentYearOrdersTotal);
+
+                        //             var mapped = $.map(report.salesTotalByYears, function(year) {
+                        //                 return year;
+                        //             });
+
+                        //             self.salesTotalByYears(mapped);
+
+                        //             var mapped = $.map(report.salesByQuarter, function(year) {
+                        //                 return year;
+                        //             });
+
+                        //             self.salesByQuarter(mapped);
+
+                        //             var mapped = $.map(report.averageByQuarter, function(year) {
+
+                        //                 return year;
+                        //             });
+
+                        //             self.averageByQuarter(mapped);
+
+
+                        //             var mapped = $.map(report.salesByMonth, function(year) {
+
+                        //                 return year;
+                        //             });
+
+                        //             self.salesByMonth(mapped);
+
+
+                        //             var mapped = $.map(report.salesCountByQuarter, function(year) {
+
+                        //                 return year;
+                        //             });
+
+                        //             self.salesCountByQuarter(mapped);
+
+
+
+                        //         } else {
+                        //             console.log(response);
+                        //         }
+                        //     },
+                        //     error: function (jqXHR, textStatus, errorThrown) {
+                        //         console.log(jqXHR);
+                        //     }
+                        // }
+
+                        // account.ajax(payload);
+
 
                         });
 
@@ -132,6 +192,7 @@ define(['plugins/router', 'account/account', 'company/Company'], function (route
                     }
                 }
             }
+
             account.ajax(payload);
         };
 

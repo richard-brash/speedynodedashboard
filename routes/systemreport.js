@@ -92,6 +92,8 @@ router.get('/topcities', auth.isValidate, function(req, res) {
     // var sql = "SELECT * FROM information_schema.tables WHERE TABLE_NAME like 'tbl%' AND TABLE_TYPE='BASE TABLE'";
     // var sql = "SELECT TOP 25 * FROM tblCustomerAddress";
     // var sql = "SELECT  * FROM tblAddressType";
+
+    
     var sql = "SELECT TOP " + params.toplimit + " tblCustomerAddress.city, SUM(DetailExtendedPrice) as TotalSales " +
     "FROM vw_CRMAllOrders JOIN tblCustomerAddress ON tblCustomerAddress.customer_id = " + 
     "vw_CRMAllOrders.HeaderCustomer_ID GROUP BY tblCustomerAddress.city ORDER BY TotalSales DESC"

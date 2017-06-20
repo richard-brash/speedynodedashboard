@@ -37,15 +37,25 @@ define(['account/account'], function (account) {
 
                     if (response.success) {
                         var report = response.data;
-                        // console.log(report);
+
+                        // if (self.Company() == "Pentech Industries"){
+                        //     console.log(report);
+
+                        //     var total = 0;
+                        //     for (var x = 0; x < report.salesByMonth.length; x++ ){
+                        //         console.log(report.salesByMonth[x].SalesMonth + ' ' + report.salesByMonth[x].TotalSales);
+                        //     }
+
+                        // }
+                        
                         // self.LastYearTotal(report.salesTotalByYears[1].Total)
                         self.ThisYTD(report.CurrentYearOrdersTotal);
                         self.LastYTD(report.LastYearOrdersTotal);
-                        self.ThisR3M(report.salesByMonth[1].TotalSales + report.salesByMonth[2].TotalSales, report.salesByMonth[3].TotalSales);
-                        self.LastQAVG(report.salesTotalByYears[1].Total / 4)
+                        self.ThisR3M(parseFloat(report.salesByMonth[1].TotalSales) + parseFloat(report.salesByMonth[2].TotalSales) + parseFloat(report.salesByMonth[3].TotalSales));
+                        self.LastQAVG(parseFloat(report.salesTotalByYears[1].Total) / 4)
 
-                        self.YearDiff((self.ThisYTD() - self.LastYTD()) / self.ThisYTD() * 100 );
-                        self.QuarterDiff((self.ThisR3M() - self.LastQAVG()) / self.ThisR3M() * 100);
+                        self.YearDiff((parseFloat(self.ThisYTD()) - parseFloat(self.LastYTD()))  / parseFloat(self.ThisYTD()) * 100 );
+                        self.QuarterDiff((parseFloat(self.ThisR3M()) - parseFloat(self.LastQAVG()) ) / parseFloat(self.ThisR3M()) * 100);
 
                     } else {
                         console.log(response);

@@ -76,6 +76,7 @@ define(['plugins/router', 'account/account', 'company/Company', 'reports/topComp
 
         self.getCompanies = function () {
             
+            self.companies([]);
             var currentPage = self.currentPage();
             var itemsToGet = self.itemsToGet();
             var toplimit = self.toplimit();

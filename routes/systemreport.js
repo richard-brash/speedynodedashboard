@@ -66,7 +66,7 @@ router.get('/topcustomers', auth.isValidate, function(req, res) {
     var msreader = new MSSQLReader(config.mssql.username, config.mssql.password, config.mssql.server);
     var sql = "SELECT TOP " + params.toplimit + " HeaderCompanyName, HeaderCustomer_ID, SUM(DetailExtendedPrice) as TotalSales " +    
         "FROM  vw_CRMAllOrders " +
-        "WHERE HeaderOrderDate >= '" + firstOfLastYear + "' AND HeaderOrderDate > '" + firstOfYear + "'"
+        "WHERE HeaderOrderDate >= '" + firstOfLastYear + "' AND HeaderOrderDate < '" + firstOfYear + "'"
        +  "GROUP BY HeaderCompanyName, HeaderCustomer_ID ORDER BY TotalSales DESC";
     msreader.executeQuery(sql,         
         function(error, records){

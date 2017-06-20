@@ -95,10 +95,10 @@ define(['plugins/router', 'account/account', 'company/Company', 'reports/topComp
                         var itemCount = response.data.length;
                         var mapCount = 0;
                         var mapped = $.map(response.data, function (company) {
-
                         var tc = new TopCompany({
                             Speedy_Id       : company.HeaderCustomer_ID,
                             Company         : company.HeaderCompanyName,
+                            LastYear        : company.TotalSales
                         });
                         tc.init();
                         self.companies.push(tc);

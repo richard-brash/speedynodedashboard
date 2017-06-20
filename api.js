@@ -6,8 +6,8 @@ var bodyParser = require('body-parser');
 
 var account = require('./routes/account');
 var company = require('./routes/company');
-var order = require('./routes/order');
-var quote = require('./routes/quote');
+// var order = require('./routes/order');
+// var quote = require('./routes/quote');
 // var report = require('./routes/report');
 // var systemreport = require('./routes/systemreport');
 // var salesreport = require('./routes/salesreport');
@@ -25,8 +25,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/account', account);
 app.use('/company', company);
-app.use('/order', order);
-app.use('/quote', quote);
+// app.use('/order', order);
+// app.use('/quote', quote);
 // app.use('/report', report);
 // app.use('/systemreport', systemreport);
 // app.use('/salesreport', salesreport);

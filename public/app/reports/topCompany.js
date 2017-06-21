@@ -16,16 +16,6 @@ define(['account/account'], function (account) {
         self.ThisR3M = ko.observable();
         self.LastQAVG = ko.observable();
 
-
-        // self.annualStatus = ko.pureComputed(function(){
-        //     return self.YearDiff() < 0 ? "decrease" : "increase";
-        // }, self);
-
-        // self.quarterStatus = ko.pureComputed(function(){
-        //     return self.QuarterDiff() < 0 ? "decrease" : "increase";
-        // }, self);
-
-
         self.init = function () {
 
             // console.log(ko.toJS(self));
@@ -38,24 +28,30 @@ define(['account/account'], function (account) {
                     if (response.success) {
                         var report = response.data;
 
-                        // if (self.Company() == "Pentech Industries"){
-                        //     console.log(report);
+                        // console.log(report);    
 
-                        //     var total = 0;
-                        //     for (var x = 0; x < report.salesByMonth.length; x++ ){
-                        //         console.log(report.salesByMonth[x].SalesMonth + ' ' + report.salesByMonth[x].TotalSales);
-                        //     }
+                        // if (self.Company() == ""){
+                        //     console.log(report);
 
                         // }
                         
-                        // self.LastYearTotal(report.salesTotalByYears[1].Total)
                         self.ThisYTD(report.CurrentYearOrdersTotal);
                         self.LastYTD(report.LastYearOrdersTotal);
-                        self.ThisR3M(parseFloat(report.salesByMonth[1].TotalSales) + parseFloat(report.salesByMonth[2].TotalSales) + parseFloat(report.salesByMonth[3].TotalSales));
+
+                        var r3mMax = (report.salesByMonth.length >= 4) ? 4 : report.salesByMonth.length;
+                        var r3Val = 0;
+                        for(var r3 = 1; r3 < r3mMax; r3++){
+                            r3Val += report.salesByMonth[r3].TotalSales;
+                        }
+
+                        //self.ThisR3M(parseFloat(report.salesByMonth[1].TotalSales) + parseFloat(report.salesByMonth[2].TotalSales) + parseFloat(report.salesByMonth[3].TotalSales));
+                        self.ThisR3M(r3Val);
+
                         self.LastQAVG(parseFloat(report.salesTotalByYears[1].Total) / 4)
 
-                        self.YearDiff((parseFloat(self.ThisYTD()) - parseFloat(self.LastYTD()))  / parseFloat(self.ThisYTD()) * 100 );
-                        self.QuarterDiff((parseFloat(self.ThisR3M()) - parseFloat(self.LastQAVG()) ) / parseFloat(self.ThisR3M()) * 100);
+                        self.YearDiff((parseFloat(self.ThisYTD()) - parseFloat(self.LastYTD()))  / parseFloat(self.LastYTD()) * 100);
+                        self.QuarterDiff((parseFloat(self.ThisR3M()) - parseFloat(self.LastQAVG()) ) / parseFloat(self.LastQAVG()) * 100);
+
 
                     } else {
                         console.log(response);

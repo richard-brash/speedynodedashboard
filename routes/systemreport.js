@@ -60,14 +60,24 @@ router.get('/topcustomers', auth.isValidate, function(req, res) {
     var config = Config.ISConfig(req.user.appname);
     var params = require('url').parse(req.url,true).query;
 
+    console.log(params);
+
     var firstOfYear = moment().format("01/01/YYYY");
     var firstOfLastYear = moment().subtract(1, 'years').format("01/01/YYYY");
 
     var msreader = new MSSQLReader(config.mssql.username, config.mssql.password, config.mssql.server);
-    var sql = "SELECT TOP " + params.toplimit + " HeaderCompanyName, HeaderCustomer_ID, SUM(DetailExtendedPrice) as TotalSales " +    
+    var sql = "SELECT TOP " + params.top + " HeaderCompanyName, HeaderCustomer_ID, SUM(DetailExtendedPrice) as TotalSales " +    
         "FROM  vw_CRMAllOrders " +
         "WHERE HeaderOrderDate >= '" + firstOfLastYear + "' AND HeaderOrderDate < '" + firstOfYear + "'"
-       +  "GROUP BY HeaderCompanyName, HeaderCustomer_ID ORDER BY TotalSales DESC";
+       +  "GROUP BY HeaderCompanyName, HeaderCustomer_ID ORDER BY TotalSales DESC ";
+
+    // var sql = "SELECT  HeaderCompanyName, HeaderCustomer_ID, SUM(DetailExtendedPrice) as TotalSales " +    
+    //     "FROM  vw_CRMAllOrders " +
+    //     "WHERE HeaderOrderDate >= '" + firstOfLastYear + "' AND HeaderOrderDate < '" + firstOfYear + "'"
+    //    +  "GROUP BY HeaderCompanyName, HeaderCustomer_ID ORDER BY TotalSales DESC "
+    //    + " OFFSET " + params.skip + " ROWS"
+    //    + " FETCH NEXT " + params.take + " ROWS ONLY;";       
+       
     msreader.executeQuery(sql,         
         function(error, records){
 

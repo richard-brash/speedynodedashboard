@@ -3,21 +3,22 @@
     <h3>Top Customers</h3>
     <hr/>
     <div>
-        Show Top: <select data-bind="options: toplimits, value:toplimit, event:{ change:getCompanies()}"></select> Customers.
+        Current Page: <span data-bind="text:currentPage"></span> | Showing: <span data-bind="text:itemsToGet"></span> Records | Top: <span data-bind="text:itemsToGet() * currentPage()"></span> Customers
     </div>    
-    <br/>
-    <!--<ul class="pager" data-bind="visible: $data.companies().length > 0"> 
+    <br/>    
+    <ul class="pager" data-bind="visible: $data.companies().length > 0"> 
         <li class="previous"><a href="#" data-bind="click: movePrevious"><i class="icon-arrow-left icon-left"></i>Previous Page</a></li>
         <li class="next"><a href="#" data-bind="click: moveNext">Next Page <i class="icon-arrow-right icon-right"></i></a></li>
-    </ul>-->
+    </ul>
+    
     <div class="table-responsive">
         <div class="alert alert-info" data-bind="visible: $data.companies().length <= 0" style="display:none;">No records found</div>
         <table class="table table-striped table-hover table-bordered table-highlight" data-bind="visible: $data.companies().length > 0" style="display:none;">
             <thead>
                 <tr>
                     <th>Company</th>
-                    <th>Annual Diff</th>
-                    <th>Quarter Diff</th>
+                    <th>YTD Change</th>
+                    <th>Quarter Change</th>
                     <th>Total Last Year</th>
                     <th>This YTD</th>
                     <th>Last YTD</th>

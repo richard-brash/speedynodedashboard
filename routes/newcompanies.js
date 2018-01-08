@@ -32,6 +32,7 @@ router.get('/', auth.isValidate, function(req,res){
     "tblCustomer.cust_enter_date " +
     "from tblCustomer " +
     "JOIN  tblCustomerAddress ON tblCustomer.customer_id = tblCustomerAddress.customer_id " +
+    "WHERE tblCustomerAddress.state = 'MI' " +
     "ORDER BY tblCustomer.cust_enter_date DESC"
 
     // var sql = "SELECT TOP 10 * " +

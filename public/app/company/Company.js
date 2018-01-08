@@ -1,6 +1,5 @@
 ﻿define(function () {
 
-
     var Company = function (data) {
 
         var self = this;

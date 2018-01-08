@@ -10,7 +10,8 @@ define(['plugins/router', 'knockout'], function(router, ko) {
             { route: '', moduleId: 'report1', title: 'Report One', nav: false},
             { route: 'topcustomers', moduleId: 'topcustomers', title: 'Top Customers', nav: true, hash:'#reports/topcustomers'},
             { route: 'topcities', moduleId: 'topcities', title: 'Top Cities', nav: true, hash:'#reports/topcities'},
-            { route: 'salesreport', moduleId: 'salesreport', title: 'Sales Report', nav: true, hash:'#reports/salesreport'}
+            { route: 'salesreport', moduleId: 'salesreport', title: 'Sales Report', nav: true, hash:'#reports/salesreport'},
+            { route: 'newcompanies', moduleId: 'newcompanies', title: 'New Companies', nav: true, hash:'#reports/newcompanies'}
         ]).buildNavigationModel();
 
     return {

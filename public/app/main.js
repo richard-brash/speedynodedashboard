@@ -7,10 +7,12 @@
         'transitions' : '../lib/durandal/js/transitions',
         'knockout': '../lib/knockout/knockout-2.3.0',
         'knockoutvalidation': '../lib/knockout/knockout.validation.min',
+        'knockoutorderable': '../lib/knockout/knockout.orderable',
         'bootstrap': '../lib/bootstrap/js/bootstrap',
         'toastr': '../lib/toastr/toastr.min',
         'jquery': '../lib/jquery/jquery',
         'moment': '../lib/moment/moment',
+        'orderable': '',
         'bootstrap-datepicker': '../lib/Datepicker-for-Bootstrap/bootstrap-datepicker',
     },
     shim: {

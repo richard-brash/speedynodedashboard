@@ -1,0 +1,26 @@
+<section class="panel-body">
+    <h3>New Companies</h3>
+    <hr/>
+    <div>
+        Show Top: <select data-bind="options: toplimits, value:toplimit, event:{ change:getNewCompanies()}"></select> Newest Companies.            
+    </div>       
+    <br/>    
+	<table class="table">
+		<thead>
+			<th><a href="#" data-bind="orderable: {collection: 'companies', field: 'customer_id'}">Speedy Id</a></th>
+            <th><a href="#" data-bind="orderable: {collection: 'companies', field: 'Company'}">Company Name</a></th>
+            <th><a href="#" data-bind="orderable: {collection: 'companies', field: 'City'}">City</a></th>
+			<th><a href="#" data-bind="orderable: {collection: 'companies', field: 'Date', defaultField: true, defaultDirection: 'desc'}">Date Added</a></th>
+		</thead>
+		<tbody data-bind="foreach: companies">
+			<tr>
+				<td data-bind="text: customer_id"></td>
+                <td data-bind="text: Company"></td>
+                <td data-bind="text: City"></td>
+				<td data-bind="text: moment(Date()).format('LL')"></td>
+			</tr>
+		</tbody>
+	</table>
+
+    <br />
+</section>
